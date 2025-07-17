@@ -10,6 +10,12 @@ on:
         required: true
         default: '1.0.0-beta.1'
 
+permissions:
+  contents: write
+  packages: write
+  issues: write
+  pull-requests: write
+
 jobs:
   build-android:
     runs-on: ubuntu-latest
@@ -66,6 +72,12 @@ jobs:
       - name: Build macOS
         run: flutter build macos --release
         
+      - name: List build directory
+        run: |
+          echo "Listing build directory contents:"
+          find build/macos -name "*.app" -type d
+          ls -la build/macos/Build/Products/Release/
+        
       - name: Create DMG
         run: |
           # Install create-dmg if not available
@@ -73,14 +85,18 @@ jobs:
             brew install create-dmg
           fi
           
+          # Find the actual app name
+          APP_NAME=$(find build/macos/Build/Products/Release/ -name "*.app" -type d | head -1 | xargs basename)
+          echo "Found app: $APP_NAME"
+          
           # Create DMG
           create-dmg \
             --volname "MultiplAI Beta" \
             --window-pos 200 120 \
             --window-size 800 400 \
             --icon-size 100 \
-            --icon "MultiplAI.app" 200 190 \
-            --hide-extension "MultiplAI.app" \
+            --icon "$APP_NAME" 200 190 \
+            --hide-extension "$APP_NAME" \
             --app-drop-link 600 185 \
             "MultiplAI-Beta.dmg" \
             "build/macos/Build/Products/Release/"
@@ -90,7 +106,7 @@ jobs:
         with:
           name: multiplai-macos-beta
           path: |
-            build/macos/Build/Products/Release/MultiplAI.app
+            build/macos/Build/Products/Release/*.app
             MultiplAI-Beta.dmg
 
   create-beta-release:
@@ -123,6 +139,13 @@ jobs:
             echo "version=1.0.0-beta.${SHORT_SHA}" >> $GITHUB_OUTPUT
           fi
           
+      - name: List downloaded files
+        run: |
+          echo "Downloaded files:"
+          ls -la
+          echo "macOS app files:"
+          find . -name "*.app" -type d
+          
       - name: Create Beta Release
         uses: softprops/action-gh-release@v1
         with:
@@ -150,7 +173,7 @@ jobs:
           files: |
             app-release.apk
             app-release.aab
-            MultiplAI.app
+            *.app
             MultiplAI-Beta.dmg
           draft: false
           prerelease: true
