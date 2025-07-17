@@ -1,0 +1,159 @@
+name: Beta Release
+
+on:
+  push:
+    branches: [ develop ]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Beta version (e.g., 1.0.0-beta.1)'
+        required: true
+        default: '1.0.0-beta.1'
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+      
+      - name: Install dependencies
+        run: flutter pub get
+        
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      
+      - name: Build Android APK
+        run: flutter build apk --release
+        
+      - name: Build Android App Bundle
+        run: flutter build appbundle --release
+        
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: multiplai-android-apk-beta
+          path: build/app/outputs/flutter-apk/app-release.apk
+          
+      - name: Upload App Bundle artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: multiplai-android-bundle-beta
+          path: build/app/outputs/bundle/release/app-release.aab
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+      
+      - name: Install dependencies
+        run: flutter pub get
+        
+      - name: Build macOS
+        run: flutter build macos --release
+        
+      - name: Create DMG
+        run: |
+          # Install create-dmg if not available
+          if ! command -v create-dmg &> /dev/null; then
+            brew install create-dmg
+          fi
+          
+          # Create DMG
+          create-dmg \
+            --volname "MultiplAI Beta" \
+            --window-pos 200 120 \
+            --window-size 800 400 \
+            --icon-size 100 \
+            --icon "MultiplAI.app" 200 190 \
+            --hide-extension "MultiplAI.app" \
+            --app-drop-link 600 185 \
+            "MultiplAI-Beta.dmg" \
+            "build/macos/Build/Products/Release/"
+        
+      - name: Upload macOS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: multiplai-macos-beta
+          path: |
+            build/macos/Build/Products/Release/MultiplAI.app
+            MultiplAI-Beta.dmg
+
+  create-beta-release:
+    needs: [build-android, build-macos]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Android APK
+        uses: actions/download-artifact@v4
+        with:
+          name: multiplai-android-apk-beta
+          
+      - name: Download Android Bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: multiplai-android-bundle-beta
+          
+      - name: Download macOS
+        uses: actions/download-artifact@v4
+        with:
+          name: multiplai-macos-beta
+          
+      - name: Get version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            # Auto-generate beta version based on commit hash
+            SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+            echo "version=1.0.0-beta.${SHORT_SHA}" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Create Beta Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          name: "MultiplAI Beta ${{ steps.version.outputs.version }}"
+          body: |
+            ## Beta Release ${{ steps.version.outputs.version }}
+            
+            This is a beta release for testing purposes.
+            
+            ### What's New
+            - Latest features and improvements
+            - Bug fixes and performance enhancements
+            
+            ### Downloads
+            - **Android APK**: Direct installation
+            - **Android Bundle**: For Play Store testing
+            - **macOS App**: Native macOS application
+            - **macOS DMG**: Easy installation package
+            
+            ### Testing
+            Please report any issues or feedback in the GitHub issues.
+            
+            **Note**: This is a beta release and may contain bugs or incomplete features.
+          files: |
+            app-release.apk
+            app-release.aab
+            MultiplAI.app
+            MultiplAI-Beta.dmg
+          draft: false
+          prerelease: true
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 

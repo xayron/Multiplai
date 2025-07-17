@@ -1,0 +1,162 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+      
+      - name: Install dependencies
+        run: flutter pub get
+        
+      - name: Run tests
+        run: flutter test
+        
+      - name: Analyze code
+        run: flutter analyze
+
+  build-android:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+      
+      - name: Install dependencies
+        run: flutter pub get
+        
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      
+      - name: Build Android APK
+        run: flutter build apk --release
+        
+      - name: Build Android App Bundle
+        run: flutter build appbundle --release
+        
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: multiplai-android-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          
+      - name: Upload App Bundle artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: multiplai-android-bundle
+          path: build/app/outputs/bundle/release/app-release.aab
+
+  build-macos:
+    needs: test
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+      
+      - name: Install dependencies
+        run: flutter pub get
+        
+      - name: Build macOS
+        run: flutter build macos --release
+        
+      - name: Create DMG
+        run: |
+          # Install create-dmg if not available
+          if ! command -v create-dmg &> /dev/null; then
+            brew install create-dmg
+          fi
+          
+          # Create DMG
+          create-dmg \
+            --volname "MultiplAI" \
+            --window-pos 200 120 \
+            --window-size 800 400 \
+            --icon-size 100 \
+            --icon "MultiplAI.app" 200 190 \
+            --hide-extension "MultiplAI.app" \
+            --app-drop-link 600 185 \
+            "MultiplAI.dmg" \
+            "build/macos/Build/Products/Release/"
+        
+      - name: Upload macOS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: multiplai-macos
+          path: |
+            build/macos/Build/Products/Release/MultiplAI.app
+            MultiplAI.dmg
+
+  release:
+    needs: [build-android, build-macos]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    strategy:
+      matrix:
+        prerelease: [false]
+    steps:
+      - name: Download Android APK
+        uses: actions/download-artifact@v4
+        with:
+          name: multiplai-android-apk
+          
+      - name: Download Android Bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: multiplai-android-bundle
+          
+      - name: Download macOS
+        uses: actions/download-artifact@v4
+        with:
+          name: multiplai-macos
+          
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: "MultiplAI ${{ github.run_number }}"
+          body: |
+            ## Release ${{ github.run_number }}
+            
+            ### What's New
+            - Latest features and improvements
+            - Bug fixes and performance enhancements
+            
+            ### Downloads
+            - **Android APK**: Direct installation
+            - **Android Bundle**: For Play Store
+            - **macOS App**: Native macOS application
+            - **macOS DMG**: Easy installation package
+          files: |
+            app-release.apk
+            app-release.aab
+            MultiplAI.app
+            MultiplAI.dmg
+          draft: false
+          prerelease: ${{ matrix.prerelease }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
