@@ -14,24 +14,29 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => LLMBloc(),
-      child: MaterialApp(
-        title: 'MultiPLAI',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.deepPurple,
-            brightness: Brightness.light,
+      child: ScrollConfiguration(
+        behavior: ScrollConfiguration.of(
+          context,
+        ).copyWith(scrollbars: false, physics: const ClampingScrollPhysics()),
+        child: MaterialApp(
+          title: 'MultiplAI',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.deepPurple,
+              brightness: Brightness.light,
+            ),
+            useMaterial3: true,
           ),
-          useMaterial3: true,
-        ),
-        darkTheme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.deepPurple,
-            brightness: Brightness.dark,
+          darkTheme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.deepPurple,
+              brightness: Brightness.dark,
+            ),
+            useMaterial3: true,
           ),
-          useMaterial3: true,
+          themeMode: ThemeMode.system,
+          home: const MyHomePage(),
         ),
-        themeMode: ThemeMode.system,
-        home: const MyHomePage(),
       ),
     );
   }
