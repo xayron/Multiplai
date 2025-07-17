@@ -1,0 +1,86 @@
+[
+    {
+        "name": "ChatGPT",
+        "description": "ChatGPT is a company that provides a range of AI services, including chatbots, voice assistants, and more.",
+        "url": "https://chatgpt.com",
+        "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/openai.png"
+    },
+    {
+        "name": "Gemini",
+        "description": "Gemini is a large language model developed by Google. It is a successor to the Google Brain model. It is a general-purpose model that can be used for a variety of tasks.",
+        "url": "https://gemini.google.com",
+        "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/gemini.png"
+    },
+    {
+        "name": "Claude",
+        "description": "Anthropic is a company that provides a range of AI services, including chatbots, voice assistants, and more.",
+        "url": "https://claude.ai",
+        "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/claude.png"
+    },
+    {
+        "name": "Grok",
+        "description": "Grok is a company that provides a range of AI services, including chatbots, voice assistants, and more.",
+        "url": "https://grok.com",
+        "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/grok.png"
+    },
+    {
+        "name": "Perplexity",
+        "description": "Perplexity is a company that provides a range of AI services, including chatbots, voice assistants, and more.",
+        "url": "https://perplexity.ai",
+        "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/perplexity.png"
+    },
+    {
+        "name": "Copilot",
+        "description": "Bing is a company that provides a range of AI services, including chatbots, voice assistants, and more.",
+        "url": "https://copilot.microsoft.com",
+        "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/copilot.png"
+    },
+    {
+        "name": "Qwen",
+        "description": "Qwen is a company that provides a range of AI services, including chatbots, voice assistants, and more.",
+        "url": "https://qwen.com",
+        "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/qwen.png"
+    },
+    {
+        "name": "DeepSeek",
+        "description": "DeepSeek is an AI chat platform providing advanced conversational capabilities.",
+        "url": "https://chat.deepseek.com/",
+        "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/deepseek.png"
+    },
+    {
+        "name": "Le Chat (Mistral AI)",
+        "description": "Le Chat is Mistral AI's conversational interface for interacting with their large language models.",
+        "url": "https://chat.mistral.ai/chat",
+        "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/mistral.png"
+    },
+    {
+        "name": "Exa & Deepseek Chat App",
+        "description": "A demo chat application integrating Exa and Deepseek AI models.",
+        "url": "https://demo.exa.ai/deepseekchat",
+        "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/exa.png"
+    },
+    {
+        "name": "HuggingChat",
+        "description": "HuggingChat is an open-source chat interface powered by Hugging Face's large language models.",
+        "url": "https://huggingface.co/chat/",
+        "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/huggingface.png"
+    },
+    {
+        "name": "Kimi AI",
+        "description": "Kimi AI is an advanced conversational AI platform, with the latest Kimi K2 model now live.",
+        "url": "https://www.kimi.com/",
+        "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/kimi.png"
+    },
+    {
+        "name": "OpenRouter",
+        "description": "OpenRouter provides a chatroom interface to interact with a variety of open-source and hosted AI models.",
+        "url": "https://openrouter.ai/chat?models=openrouter/optimus-alpha",
+        "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/openrouter.png"
+    },
+    {
+        "name": "T3 Chat",
+        "description": "T3 Chat is an AI-powered chat platform for advanced conversations.",
+        "url": "https://t3.chat/",
+        "icon": "https://t3.chat/icon.png?d611932676eabb77"
+    }
+]
