@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multiplai/blocs/llm_bloc.dart';
 import 'package:multiplai/blocs/llm_state.dart';
-import 'package:multiplai/widgets/sidebar.dart';
-import 'package:multiplai/widgets/content_area.dart';
-import 'package:multiplai/widgets/webview.dart';
+import 'package:multiplai/widgets/index.dart';
 
 class DesktopLayout extends StatelessWidget {
   final Function(String serviceName, int pageIndex) onServiceSelected;

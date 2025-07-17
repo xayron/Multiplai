@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multiplai/blocs/llm_bloc.dart';
 import 'package:multiplai/blocs/llm_state.dart';
 import 'package:multiplai/models/llm_service.dart';
-import 'package:multiplai/widgets/webview.dart';
+import 'package:multiplai/widgets/index.dart';
 
 class ContentArea extends StatelessWidget {
   final Map<String, WebviewController> webviewControllers;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multiplai/blocs/llm_bloc.dart';
-import 'package:multiplai/widgets/home_page.dart';
+import 'package:multiplai/widgets/index.dart';
 
 void main() {
   runApp(const MyApp());

@@ -3,10 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multiplai/blocs/llm_bloc.dart';
 import 'package:multiplai/blocs/llm_event.dart';
 import 'package:multiplai/blocs/llm_state.dart';
-import 'package:multiplai/widgets/webview.dart';
-import 'package:multiplai/widgets/hamburger_menu.dart';
-import 'package:multiplai/widgets/mobile_layout.dart';
-import 'package:multiplai/widgets/desktop_layout.dart';
+import 'package:multiplai/widgets/index.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});

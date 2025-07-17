@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:multiplai/widgets/mobile_app_bar.dart';
-import 'package:multiplai/widgets/content_area.dart';
-import 'package:multiplai/widgets/webview.dart';
+import 'package:multiplai/widgets/index.dart';
 
 class MobileLayout extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
