@@ -1,6 +1,6 @@
-# MultiPLAI
+# MultiplAI
 
-A Flutter desktop application that provides a unified interface for accessing multiple AI chat services through embedded webviews. MultiPLAI allows you to seamlessly switch between popular AI platforms like ChatGPT, Gemini, Claude, and many others without opening multiple browser tabs.
+A Flutter desktop application that provides a unified interface for accessing multiple AI chat services through embedded webviews. MultiplAI allows you to seamlessly switch between popular AI platforms like ChatGPT, Gemini, Claude, and many others without opening multiple browser tabs.
 
 ## Features
 
@@ -109,7 +109,7 @@ flutter build linux
 
 ## Usage
 
-1. **Launch the application** - MultiPLAI will load with a sidebar showing available AI services
+1. **Launch the application** - MultiplAI will load with a sidebar showing available AI services
 2. **Select a service** - Click on any service icon in the sidebar to open it
 3. **Navigate between services** - Use the sidebar to switch between different AI platforms
 4. **Manage cache** - Each service maintains its own cache for better performance
