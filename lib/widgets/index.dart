@@ -1,5 +1,5 @@
 // Core widgets
-export 'webview.dart';
+export 'webview/index.dart';
 export 'cache_manager.dart';
 
 // Component-based widgets

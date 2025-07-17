@@ -38,7 +38,7 @@
     {
         "name": "Qwen",
         "description": "Qwen is a company that provides a range of AI services, including chatbots, voice assistants, and more.",
-        "url": "https://qwen.com",
+        "url": "https://chat.qwen.ai",
         "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/qwen.png"
     },
     {
@@ -54,7 +54,7 @@
         "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/mistral.png"
     },
     {
-        "name": "Exa & Deepseek Chat App",
+        "name": "Exa",
         "description": "A demo chat application integrating Exa and Deepseek AI models.",
         "url": "https://demo.exa.ai/deepseekchat",
         "icon": "https://registry.npmmirror.com/@lobehub/icons-static-png/1.55.0/files/light/exa.png"

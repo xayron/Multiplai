@@ -4,6 +4,7 @@ import 'package:multiplai/blocs/llm_bloc.dart';
 import 'package:multiplai/blocs/llm_event.dart';
 import 'package:multiplai/blocs/llm_state.dart';
 import 'package:multiplai/models/llm_service.dart';
+import 'package:multiplai/widgets/hamburger_menu/index.dart';
 
 class HamburgerMenu extends StatelessWidget {
   final Function(String serviceName, int pageIndex)? onServiceSelected;
@@ -52,7 +53,6 @@ class HamburgerMenu extends StatelessWidget {
   }
 
   Widget _buildMenuContent(BuildContext context, LLMLoaded state) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final servicesToUse = services ?? state.services;
     final selectedIndexToUse = selectedIndex ?? 0;
 
@@ -67,17 +67,15 @@ class HamburgerMenu extends StatelessWidget {
               color: Theme.of(context).colorScheme.primaryContainer,
               border: Border(
                 bottom: BorderSide(
-                  color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.outline.withAlpha((0.2 * 10).toInt()),
                 ),
               ),
             ),
             child: Row(
               children: [
-                Icon(
-                  Icons.smart_toy,
-                  color: Theme.of(context).colorScheme.primary,
-                  size: 24,
-                ),
+                const Icon(Icons.smart_toy, size: 24),
                 const SizedBox(width: 12),
                 Text(
                   'AI Services',
@@ -107,6 +105,8 @@ class HamburgerMenu extends StatelessWidget {
               child: ListView.builder(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 itemCount: servicesToUse.length,
+                itemExtent: 64.0,
+                cacheExtent: 512.0,
                 itemBuilder: (context, index) {
                   final service = servicesToUse[index];
                   return _buildServiceItem(
@@ -166,7 +166,7 @@ class HamburgerMenu extends StatelessWidget {
             ),
             child: Row(
               children: [
-                // Service icon
+                // Service icon with platform-aware caching
                 Container(
                   width: 40,
                   height: 40,
@@ -176,33 +176,20 @@ class HamburgerMenu extends StatelessWidget {
                     color: isSelected
                         ? Theme.of(context).colorScheme.primary
                         : Theme.of(context).colorScheme.primary.withAlpha(80),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
-                        color: Colors.black.withAlpha(10),
+                        color: Colors.black12,
                         spreadRadius: 1,
                         blurRadius: 3,
-                        offset: const Offset(0, 1),
+                        offset: Offset(0, 1),
                       ),
                     ],
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(6),
-                    child: Image.network(
-                      service.icon,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: isDark ? Colors.grey[700] : Colors.grey[300],
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Icon(
-                            Icons.smart_toy,
-                            color: isDark ? Colors.grey[400] : Colors.grey[600],
-                            size: 16,
-                          ),
-                        );
-                      },
+                    child: PlatformAwareImage(
+                      url: service.icon,
+                      isDark: isDark,
                     ),
                   ),
                 ),
@@ -222,12 +209,7 @@ class HamburgerMenu extends StatelessWidget {
                   ),
                 ),
                 // Selection indicator
-                if (isSelected)
-                  Icon(
-                    Icons.check_circle,
-                    color: Theme.of(context).colorScheme.primary,
-                    size: 20,
-                  ),
+                if (isSelected) const Icon(Icons.check_circle, size: 20),
               ],
             ),
           ),

@@ -64,20 +64,26 @@ class Sidebar extends StatelessWidget {
 
     return Container(
       color: isDark ? Colors.grey[900] : Colors.grey[100],
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          ...servicesToUse.asMap().entries.map((entry) {
-            final index = entry.key;
-            final service = entry.value;
-            return _buildServiceIcon(
-              context,
-              service,
-              index,
-              selectedIndexToUse,
-            );
-          }),
-        ],
+      child: ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              ...servicesToUse.asMap().entries.map((entry) {
+                final index = entry.key;
+                final service = entry.value;
+                return _buildServiceIcon(
+                  context,
+                  service,
+                  index,
+                  selectedIndexToUse,
+                );
+              }),
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
       ),
     );
   }

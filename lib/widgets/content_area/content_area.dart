@@ -103,7 +103,7 @@ class ContentArea extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: Theme.of(
                         context,
-                      ).colorScheme.onSurface.withOpacity(0.7),
+                      ).colorScheme.onSurface.withAlpha((0.7 * 10).toInt()),
                     ),
                   ),
                 ],
@@ -127,13 +127,17 @@ class ContentArea extends StatelessWidget {
             Icon(
               Icons.smart_toy_outlined,
               size: 64,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withAlpha((0.5 * 10).toInt()),
             ),
             const SizedBox(height: 16),
             Text(
               'Select an AI service to get started',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withAlpha((0.7 * 10).toInt()),
               ),
             ),
           ],

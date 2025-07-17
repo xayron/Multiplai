@@ -18,7 +18,9 @@ class MobileAppBar extends StatelessWidget {
             color: Theme.of(context).colorScheme.surface,
             border: Border(
               bottom: BorderSide(
-                color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
+                color: Theme.of(
+                  context,
+                ).colorScheme.outline.withAlpha((0.2 * 10).toInt()),
               ),
             ),
           ),

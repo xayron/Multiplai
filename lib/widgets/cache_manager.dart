@@ -91,7 +91,9 @@ class _CacheManagerState extends State<CacheManager> {
               Icon(
                 Icons.storage,
                 size: 16,
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withAlpha((0.6 * 10).toInt()),
               ),
               const SizedBox(width: 8),
               Text(
@@ -113,7 +115,9 @@ class _CacheManagerState extends State<CacheManager> {
             Text(
               CacheService.formatBytes(_cacheSize),
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withAlpha((0.7 * 10).toInt()),
                 fontFamily: 'monospace',
               ),
             ),
